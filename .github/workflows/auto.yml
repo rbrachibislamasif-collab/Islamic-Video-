@@ -1,41 +1,35 @@
-name: auto-upload
+name: Auto Post
+
 on:
   schedule:
-    - cron: "0 1 * * *"
-    - cron: "0 7 * * *"
-    - cron: "0 15 * * *"
-  workflow_dispatch:
-permissions:
-  contents: write
-concurrency:
-  group: uploader
-  cancel-in-progress: false
+    - cron: "0 1,7,13 * * *"   # UTCà¥¤ à¦¬à¦¾à¦‚à¦²à¦¾à¦¦à§‡à¦¶ à¦¸à¦®à¦¯à¦¼ à¦¸à¦•à¦¾à¦² à§­à¦Ÿà¦¾, à¦¦à§à¦ªà§à¦° à§§à¦Ÿà¦¾, à¦°à¦¾à¦¤ à§­à¦Ÿà¦¾
+  workflow_dispatch:          # à¦¹à¦¾à¦¤à§‡ à¦šà¦¾à¦²à¦¾à¦¨à§‹à¦° à¦¬à¦¾à¦Ÿà¦¨
+
 jobs:
-  run:
+  post:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-      - run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-noto-core libraqm0 libfribidi0
-      - run: pip install -r requirements.txt
-      - run: python main.py
+          python-version: "3.12"
+
+      - name: Install
+        run: |
+          pip install requests
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Run
+        run: python main.py
         env:
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
-          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
-          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
-      - name: Save used titles
-        if: success()
-        run: |
-          git config user.name "bot"
-          git config user.email "bot@users.noreply.github.com"
-          git add used_titles.txt
-          git commit -m "update titles" || exit 0
-          git pull --rebase
-          git push
