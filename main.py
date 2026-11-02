@@ -7,7 +7,8 @@ FB_PAGE_ID, FB_PAGE_TOKEN = E("FB_PAGE_ID"), E("FB_PAGE_TOKEN")
 IG_USER_ID = E("IG_USER_ID")
 GEMINI_KEY, PIXABAY_KEY = E("GEMINI_API_KEY"), E("PIXABAY_API_KEY")
 YT_ID, YT_SECRET, YT_REFRESH = E("YT_CLIENT_ID"), E("YT_CLIENT_SECRET"), E("YT_REFRESH_TOKEN")
-MODELS = (E("GEMINI_MODELS") or "gemini-3.8-flash,gemini-3.7-flash,gemini-2.5-flash").split(",")
+MODELS = ["gemini-3.8-flash", "gemini-flash-latest", "gemini-flash-lite-latest"]
+PRIVACY = "public"
 NICHE = E("NICHE") or "ইসলামের শিক্ষণীয় বিষয়"
 ANGLES = ["আখলাক ও সুন্দর চরিত্র", "নবী-রাসূলদের শিক্ষণীয় ঘটনা", "দোয়া ও যিকির", "সবর ও শোকর",
           "পিতা-মাতার হক ও আত্মীয়তা", "সততা ও আমানত", "সালাত ও ইবাদতের গুরুত্ব", "আল্লাহর সৃষ্টি নিয়ে চিন্তা",
