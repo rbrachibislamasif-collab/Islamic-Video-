@@ -15,6 +15,7 @@ GENERAL_TOPICS = ["মহাকাশ", "মানবদেহ", "প্রা�
                   "পরিবেশ ও প্রকৃতি", "মস্তিষ্ক ও মনোবিজ্ঞান", "বিখ্যাত মানুষদের শিক্ষণীয় জীবন",
                   "সময় ব্যবস্থাপনা ও পড়াশোনার কৌশল", "সাধারণ জ্ঞান"]
 CTA = "ভিডিওটা ভালো লাগলে একটা লাইক দিন, আর চ্যানেলটা সাবস্ক্রাইব করে আমাদের পাশে থাকুন।"
+TELEGRAM_LINK = "https://t.me/Online_Income_Tips001"   # এখানে আপনার টেলিগ্রাম চ্যানেলের লিংক বসান (কোটেশনের ভেতরে)
 VOICE = "bn-BD-NabanitaNeural"
 MODELS = ["gemini-3.8-flash", "gemini-flash-latest", "gemini-flash-lite-latest"]
 PRIVACY = "public"
@@ -314,6 +315,8 @@ def main():
     data["scenes"].append({"text": CTA,
                            "keyword": "mosque sunset" if data.get("islamic") else "sky clouds"})
     data["description"] = data["description"] + "\n\nভিডিওটা ভালো লাগলে লাইক করুন ও চ্যানেল সাবস্ক্রাইব করুন।"
+    if TELEGRAM_LINK and "আপনার" not in TELEGRAM_LINK:
+        data["description"] += "\n\nআমাদের টেলিগ্রাম চ্যানেলে জয়েন করুন: " + TELEGRAM_LINK
     names = []
     for i, sc in enumerate(data["scenes"]):
         audio, cap, out = f"{WORK}/a{i}.mp3", f"{WORK}/c{i}.png", f"{WORK}/s{i}.mp4"
